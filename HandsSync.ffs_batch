@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FreeFileSync XmlType="BATCH" XmlFormat="14">
+    <Compare>
+        <Variant>TimeAndSize</Variant>
+        <Symlinks>Exclude</Symlinks>
+        <IgnoreTimeShift/>
+    </Compare>
+    <Synchronize>
+        <Variant>TwoWay</Variant>
+        <DetectMovedFiles>false</DetectMovedFiles>
+        <DeletionPolicy>RecycleBin</DeletionPolicy>
+        <VersioningFolder Style="Replace"/>
+    </Synchronize>
+    <Filter>
+        <Include>
+            <Item>*</Item>
+        </Include>
+        <Exclude>
+            <Item>\System Volume Information\</Item>
+            <Item>\$Recycle.Bin\</Item>
+            <Item>\RECYCLER\</Item>
+            <Item>\RECYCLED\</Item>
+            <Item>*\desktop.ini</Item>
+            <Item>*\thumbs.db</Item>
+            <Item/>
+        </Exclude>
+        <TimeSpan Type="None">0</TimeSpan>
+        <SizeMin Unit="None">0</SizeMin>
+        <SizeMax Unit="None">0</SizeMax>
+    </Filter>
+    <FolderPairs>
+        <Pair>
+            <Left>%userprofile%\documents\hands\signatures\</Left>
+            <Right>\\grdhd3\hands\hands signatures</Right>
+        </Pair>
+        <Pair>
+            <Left>%userprofile%\documents\hands\handouts</Left>
+            <Right>\\grdhd3\hands\documents\handouts</Right>
+        </Pair>
+        <Pair>
+            <Left>%userprofile%\documents\hands\Completed visit archive</Left>
+            <Right>\\grdhd3\hands\employee folders\%username%\completed visit archive</Right>
+        </Pair>
+        <Pair>
+            <Left>%userprofile%\documents\hands\visits completed</Left>
+            <Right>\\grdhd3\hands\employee folders\%username%\visits completed</Right>
+        </Pair>
+        <Pair>
+            <Left>%userprofile%\documents\hands\caseloads</Left>
+            <Right>\\grdhd3\hands\caseloads\%username%</Right>
+        </Pair>
+        <Pair>
+            <Left>%userprofile%\documents\hands\work in progress</Left>
+            <Right>\\grdhd3\hands\employee folders\%username%\work in progress</Right>
+        </Pair>
+        <Pair>
+            <Left>%userprofile%\documents\hands\supervision\In Progress</Left>
+            <Right>\\grdhd3\hands\employee folders\%username%\supervision\In Progress</Right>
+        </Pair>
+        <Pair>
+            <Left>%userprofile%\documents\hands\to supervisor</Left>
+            <Right>\\grdhd3\hands\employee folders\%username%\to supervisor</Right>
+        </Pair>
+        <Pair>
+            <Left>%userprofile%\documents\hands\to data entry</Left>
+            <Right>\\grdhd3\hands\employee folders\%username%\to data entry</Right>
+        </Pair>
+        <Pair>
+            <Left>%userprofile%\documents\hands\needs correction</Left>
+            <Right>\\grdhd3\hands\employee folders\%username%\needs correction</Right>
+        </Pair>
+        <Pair>
+            <Left>%userprofile%\documents\hands\labels</Left>
+            <Right>\\grdhd3\hands\documents\labels</Right>
+        </Pair>
+        <Pair>
+            <Left>%userprofile%\documents\hands\forms</Left>
+            <Right>\\grdhd3\hands\documents\forms</Right>
+        </Pair>
+        <Pair>
+            <Left>%userprofile%\documents\hands\activities</Left>
+            <Right>\\grdhd3\hands\documents\activities</Right>
+        </Pair>
+    </FolderPairs>
+    <Errors Ignore="true" Retry="0" Delay="5"/>
+    <LogFolder/>
+    <PostSyncCommand Condition="Completion"/>
+    <Batch>
+        <ProgressDialog Minimized="false" AutoClose="true"/>
+        <ErrorDialog>Show</ErrorDialog>
+        <PostSyncAction>None</PostSyncAction>
+    </Batch>
+</FreeFileSync>
