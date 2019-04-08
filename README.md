@@ -26,7 +26,7 @@ GRDHD HANDS GUI Version 2.4
 
 ******************************************************************************
 
-To properly use the HANDS GUI, you must first install FreeFileSync. Both of these install files are located in the HANDS GUI folder for ease of deployment.
+To properly use the HANDS GUI, you must first install FreeFileSync and PDFTK. Both of these install files are located in the HANDS GUI folder for ease of deployment.
 
 To use the HANDS GUI, run the executable deployment file labeled for the position you fill (Data, Worker, Supervisor). This executable will copy down from the GRDHD server the proper GUI program, an image file used within the program, this README file, and create a desktop shortcut to the GUI. The GUI requires no installation of its own.
 
