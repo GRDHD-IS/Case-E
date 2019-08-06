@@ -20,7 +20,7 @@ Func Caseloads($parent, $worker)
 					GUIDelete()
 					Mainwindow()
 				Case $currentButton
-					ShellExecute("\\grdhd3\hands\Caseloads\" & $worker & "\caseload" & $caseloadFileType)
+					ShellExecute("\\" & $server & "\hands\Caseloads\" & $worker & "\caseload" & $caseloadFileType)
 				Case $archiveButton
 					GUIDelete()
 					CaseloadArchive($parent, $worker)
@@ -42,10 +42,10 @@ Func Caseloads($parent, $worker)
 						GUIDelete()
 						opentodata($worker)
 					Case $currentButton
-						ShellExecute("\\grdhd3\hands\caseloads\" & $worker & "\caseload" & $caseloadFileType)
+						ShellExecute("\\" & $server & "\hands\caseloads\" & $worker & "\caseload" & $caseloadFileType)
 					Case $archiveButton
 						GUIDelete()
-
+						CaseloadArchive($parent, $worker)
 
 				EndSwitch
 			WEnd
@@ -58,7 +58,7 @@ Func Caseloads($parent, $worker)
 							GUIDelete()
 							mainwindow()
 						Case $currentButton
-							ShellExecute("\\grdhd3\hands\caseloads\" & $worker & "\caseload" & $caseloadFileType)
+							ShellExecute("\\" & $server & "\hands\caseloads\" & $worker & "\caseload" & $caseloadFileType)
 						Case $archiveButton
 							GUIDelete()
 							CaseloadArchive($parent, $worker)
@@ -72,7 +72,7 @@ Func Caseloads($parent, $worker)
 							GUIDelete()
 							Mainwindow()
 						Case $currentButton
-							ShellExecute("\\grdhd3\hands\caseloads\" & @UserName & "\caseload" & $caseloadFileType)
+							ShellExecute("\\" & $server & "\hands\caseloads\" & @UserName & "\caseload" & $caseloadFileType)
 						Case $sendToArchive
 							$filecheck = FileExists("\\" & $server & "\hands")
 							If $filecheck = 0 Then
@@ -94,7 +94,7 @@ Func CaseloadArchive($parent, $worker)
 	$archivegui = GUICreate("Caseload Archive", 500, 500)
 	$list = GUICtrlCreateListView("File", 25, 25, 450, 424)
 	_GUICtrlListView_SetColumnWidth($list, 0, 420)
-	filelist($list, "filler", "\\grdhd3\hands\caseloads\" & $worker & "\archive", Default)
+	filelist($list, "filler", "\\" & $server & "\hands\caseloads\" & $worker & "\archive", Default)
 	$openbutton = GUICtrlCreateButton("Open", 425, 450, 50, 25)
 	;$backbutton = GUICtrlCreateButton("Back", 374, 450, 50, 25)
 	GUISetState(@SW_SHOW)
@@ -107,7 +107,7 @@ Func CaseloadArchive($parent, $worker)
 				GUIDelete()
 				Caseloads($parent, $worker)
 				;Case $backbutton
-				;	If $path = "\\grdhd3\hands\employee folders\" & $worker & "\caseload" Then
+				;	If $path = "\\" & $server & "\hands\employee folders\" & $worker & "\caseload" Then
 				;		_GUICtrlListView_DeleteAllItems($list)
 				;		filelist($list, "filler", $path, Default)
 				;	Else
@@ -124,7 +124,7 @@ Func CaseloadArchive($parent, $worker)
 					MsgBox(0, "Error", "You must make a selection")
 				Else
 					If $path = "" Then
-						$path = "\\grdhd3\hands\caseloads\" & $worker & "\archive\" & $sItem
+						$path = "\\" & $server & "\hands\caseloads\" & $worker & "\archive\" & $sItem
 					Else
 						$path = $path & "\" & $sItem
 					EndIf
@@ -144,7 +144,7 @@ Func StaffCaseloads($parent, $worker)
 	$staff = GUICreate("Staff", 300, 300)
 	$select = GUICtrlCreateButton("Select", 226, 271, 45, 25)
 	$staffList = GUICtrlCreateListView("Staff Member", 10, 10, 260, 260)
-	FileList($staffList, "", "\\grdhd3\hands\caseloads", "*")
+	FileList($staffList, "", "\\" & $server & "\hands\caseloads", "*")
 	_GUICtrlListView_SetColumnWidth($staffList, 0, 209)
 	GUISetState(@SW_SHOW)
 
@@ -190,8 +190,18 @@ Func Date($parent, $worker)
 			Case $selectButton
 				$monthselected = GUICtrlRead($monthpicker)
 				$yearselected = GUICtrlRead($yearpicker)
-				FileCopy("\\grdhd3\hands\caseloads\" & $worker & "\caseload" & $caseloadfileType, "\\grdhd3\hands\caseloads\" & $worker & "\archive\" & $yearselected & "\caseload" & $caseloadFileType, $FC_CREATEPATH)
-				FileMove("\\grdhd3\hands\caseloads\" & $worker & "\archive\" & $yearselected & "\caseload" & $caseloadfileType, "\\grdhd3\hands\caseloads\" & $worker & "\archive\" & $yearselected & "\" & $monthselected & $caseloadfiletype)
+				If $monthselected = "Month" Then
+					MsgBox(0, "Error", "You must select a month")
+					GUIDelete()
+					Date($parent, $worker)
+				EndIf
+				If $yearselected = "Year" Then
+					MsgBox(0, "Error", "You must select a year")
+					GUIDelete()
+					Date($parent, $worker)
+				EndIf
+				FileCopy("\\" & $server & "\hands\caseloads\" & $worker & "\caseload" & $caseloadfileType, "\\" & $server & "\hands\caseloads\" & $worker & "\archive\" & $yearselected & "\caseload" & $caseloadFileType, $FC_CREATEPATH)
+				FileMove("\\" & $server & "\hands\caseloads\" & $worker & "\archive\" & $yearselected & "\caseload" & $caseloadfileType, "\\" & $server & "\hands\caseloads\" & $worker & "\archive\" & $yearselected & "\" & $monthselected & $caseloadfiletype)
 				GUIDelete($datewindow)
 				Caseloads($parent, $worker)
 		EndSwitch

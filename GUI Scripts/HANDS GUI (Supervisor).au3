@@ -1,7 +1,7 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Icon=\\grdhd3\hands\HANDS Box\Version 1.1\hands-start-icon.ico
+#AutoIt3Wrapper_Icon=..\HANDS Box\Version 1.1\hands-start-icon.ico
 #AutoIt3Wrapper_Res_Description=GRDHD HANDS GUI for Supervisors
-#AutoIt3Wrapper_Res_Fileversion=2.4.0.0
+#AutoIt3Wrapper_Res_Fileversion=3.3.0.0
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;******************************************************************************
@@ -42,8 +42,11 @@
 #include <String.au3>
 #include <IE.au3>
 
+;Versioning variable
+$version = "3.3"
+
 ;Variables that declare paths
-Global $server = "GRDHD3"
+Global $server = "GRDHD5"
 Global $employeefolders = "\\" & $server & "\HANDS\employee folders"
 Global $chartsPath = "\\" & $server & "\HANDS\charts"
 Global $labelsPath = "\\" & $server & "\hands\documents\labels"
@@ -61,10 +64,16 @@ Global $formLanguage = "English"
 
 Global $Getdate_Dateentered
 
-$filecheck = FileExists("\\" & $server & "\hands\gui\readme.txt")
+$processcheck = WinExists("Case-E Supervisor Edition v" & $version)
+If $processcheck = 1 Then
+	WinActivate("Case-E Supervisor Edition v" & $version)
+	Exit
+EndIf
+
+$filecheck = FileExists("\\" & $server & "\hands\gui\readme - supervisor.txt")
 If $filecheck = 1 Then
-	$LocalVersion = FileRead(@UserProfileDir & "\documents\hands\gui\README.txt", 27)
-	$ServerVersion = FileRead("\\grdhd3\hands\gui\README.txt", 27)
+	$LocalVersion = FileRead(@UserProfileDir & "\documents\hands\gui\README - supervisor.txt", 27)
+	$ServerVersion = FileRead("\\" & $server & "\hands\gui\README - supervisor.txt", 27)
 	If $LocalVersion = $ServerVersion Then
 		MainWindow()
 	Else
@@ -77,13 +86,13 @@ Else
 EndIf
 
 Func Update()
-	FileDelete(@UserProfileDir & "\documents\hands\gui\README.txt")
-	FileCopy("\\" & $server & "\hands\gui\README.txt", @UserProfileDir & "\documents\hands\gui\README.txt", $FC_OVERWRITE + $FC_CREATEPATH)
+	FileDelete(@UserProfileDir & "\documents\hands\gui\README - supervisor.txt")
+	FileCopy("\\" & $server & "\hands\gui\README - supervisor.txt", @UserProfileDir & "\documents\hands\gui\README - supervisor.txt", $FC_OVERWRITE + $FC_CREATEPATH)
 	FileDelete(@TempDir & "\GUI UPDATE.cmd")
 	Global $CMD_BATCH = ':loop' & _
 			@CRLF & 'del "' & @ScriptFullPath & '"' & _
 			@CRLF & 'if exist "' & @ScriptFullPath & '" goto loop' & _
-			@CRLF & 'copy "\\grdhd3\hands\gui\' & @OSArch & "\" & @ScriptName & '" "' & @ScriptFullPath & '"' & _
+			@CRLF & 'copy "\\' & $server & '\hands\gui\' & @OSArch & "\" & @ScriptName & '" "' & @ScriptFullPath & '"' & _
 			@CRLF & 'f' & _
 			@CRLF & '"' & @ScriptFullPath & '"'
 	FileWrite(@TempDir & "\GUI UPDATE.cmd", $CMD_BATCH)
@@ -93,7 +102,7 @@ EndFunc   ;==>Update
 
 
 Func MainWindow()
-	$mainWindow = GUICreate("Case-E Supervisor Edition", 877, 753)
+	$mainWindow = GUICreate("Case-E Supervisor Edition v" & $version, 877, 753)
 	$workerlist = GUICtrlCreateListView("Workers", 10, 50, 251, 600)
 	_GUICtrlListView_SetColumnWidth($workerlist, 0, 247)
 	FileList($workerlist, "to supervisor", $employeefolders, "*")

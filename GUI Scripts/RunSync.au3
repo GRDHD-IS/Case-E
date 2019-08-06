@@ -7,10 +7,18 @@ Func runSync()
 	If $filecheck = 1 Then
 		;$filecheck = FileExists($server & "\hands\gui\handssync.ffs_batch")
 		;If $filecheck = 0 Then
-			FileCopy("\\" & $server & "\hands\gui\handsSync.ffs_batch", $handsPath,$FC_OVERWRITE)
+		FileCopy("\\" & $server & "\hands\gui\handsSync.ffs_batch", $handsPath, $FC_OVERWRITE)
+		FileCopy("\\" & $server & "\hands\gui\handsSync2.ffs_batch", $handsPath, $FC_OVERWRITE)
 		;EndIf
+		If ProcessExists("NuancePDF.exe") Then
+			MsgBox(0, "Error", "Sync cannot run while PDf files are open, please close all PDF files." & @CRLF & "Sync will begin once all PDF files are closed.")
+			ProcessWaitClose("NuancePDF.exe")
+		EndIf
 		ShellExecute($handsPath & "\handsSync.ffs_batch")
-		sleep(1000)
-		processwaitclose("freefilesync.exe")
+		Sleep(1000)
+		ProcessWaitClose("freefilesync.exe")
+		ShellExecute($handsPath & "\handsSync2.ffs_batch")
+		Sleep(1000)
+		ProcessWaitClose("freefilesync.exe")
 	EndIf
 EndFunc   ;==>runSync

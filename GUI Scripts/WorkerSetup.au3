@@ -28,10 +28,10 @@ Func setup()
 	;If @error = 0 Then
 	;	DirCreate($supervisorPath)
 	;EndIf
-	$filecheck = FileExists($supervisionPath)
-	If @error = 0 Then
-		DirCreate($supervisionPath)
-	EndIf
+	;$filecheck = FileExists($supervisionPath)
+	;If @error = 0 Then
+	;	DirCreate($supervisionPath)
+	;EndIf
 	$filecheck = FileExists($workPath)
 	If @error = 0 Then
 		DirCreate($workPath)

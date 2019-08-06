@@ -1,7 +1,8 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Icon=\\grdhd3\hands\HANDS Box\Version 1.1\hands-start-icon.ico
+#AutoIt3Wrapper_Icon=..\HANDS Box\Version 1.1\hands-start-icon.ico
+#AutoIt3Wrapper_UseX64=y
 #AutoIt3Wrapper_Res_Description=GRDHD HANDS GUI for Workers
-#AutoIt3Wrapper_Res_Fileversion=2.4.0.0
+#AutoIt3Wrapper_Res_Fileversion=3.3.0.0
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;******************************************************************************
@@ -39,11 +40,14 @@
 #include <Crypt.au3>
 #include <String.au3>
 
+;Versioning variable
+$version = "3.3"
+
 ;Variables that declare paths
-Global $server = "GRDHD3"
+Global $server = "GRDHD5"
 Global $handsPath = @UserProfileDir & "\documents\HANDS"
 Global $workPath = $handsPath & "\Work in Progress"
-Global $supervisionPath = $handsPath & "\Supervision"
+;Global $supervisionPath = $handsPath & "\Supervision"
 Global $supervisorPath = $handsPath & "\to Supervisor"
 Global $dataPath = $handsPath & "\to Data Entry"
 Global $correctionPath = $handsPath & "\Needs Correction"
@@ -128,11 +132,16 @@ Global $packets = getPDFList($formsPath & "\" & $formLanguage, "*.pdf")
 Global $templates = $packets
 
 ;-----------------------------------------------------------------------------------------------
-$filecheck = FileExists("\\" & $server & "\hands\gui\readme.txt")
+$processcheck = WinExists("Case-E Worker Edition v" & $version)
+If $processcheck = 1 Then
+	WinActivate("Case-E Worker Edition v" & $version)
+	Exit
+EndIf
+$filecheck = FileExists("\\" & $server & "\hands\gui\readme - worker.txt")
 If FileExists("c:\program files\freefilesync\freefilesync.exe") Then
 	If $filecheck = 1 Then
-		$LocalVersion = FileRead(@UserProfileDir & "\documents\hands\gui\README.txt", 27)
-		$ServerVersion = FileRead("\\grdhd3\hands\gui\README.txt", 27)
+		$LocalVersion = FileRead(@UserProfileDir & "\documents\hands\gui\README - worker.txt", 27)
+		$ServerVersion = FileRead("\\" & $server & "\hands\gui\README - worker.txt", 27)
 		If $LocalVersion = $ServerVersion Then
 			setup()
 			runsync()
@@ -143,6 +152,7 @@ If FileExists("c:\program files\freefilesync\freefilesync.exe") Then
 			Exit (1)
 		EndIf
 	Else
+		runsync()
 		MainWindow()
 	EndIf
 Else
@@ -150,13 +160,13 @@ Else
 EndIf
 
 Func Update()
-	FileDelete(@UserProfileDir & "\documents\hands\gui\README.txt")
-	FileCopy("\\" & $server & "\hands\gui\README.txt", @UserProfileDir & "\documents\hands\gui\README.txt", $FC_OVERWRITE + $FC_CREATEPATH)
+	FileDelete(@UserProfileDir & "\documents\hands\gui\README - worker.txt")
+	FileCopy("\\" & $server & "\hands\gui\README - worker.txt", @UserProfileDir & "\documents\hands\gui\README - worker.txt", $FC_OVERWRITE + $FC_CREATEPATH)
 	FileDelete(@TempDir & "\GUI UPDATE.cmd")
 	Global $CMD_BATCH = ':loop' & _
 			@CRLF & 'del "' & @ScriptFullPath & '"' & _
 			@CRLF & 'if exist "' & @ScriptFullPath & '" goto loop' & _
-			@CRLF & 'copy "\\grdhd3\hands\gui\' & @OSArch & "\" & @ScriptName & '" "' & @ScriptFullPath & '"' & _
+			@CRLF & 'copy "\\' & $server & '\hands\gui\' & @OSArch & "\" & @ScriptName & '" "' & @ScriptFullPath & '"' & _
 			@CRLF & 'f' & _
 			@CRLF & '"' & @ScriptFullPath & '"'
 	FileWrite(@TempDir & "\GUI UPDATE.cmd", $CMD_BATCH)
@@ -166,7 +176,7 @@ EndFunc   ;==>Update
 ;---------------------------------------------------------------------------------------------------------------------------------------------------------
 ;Main Window
 Func MainWindow()
-	Global $mainWindow = GUICreate("Case-E Worker Edition", 635, 504)
+	Global $mainWindow = GUICreate("Case-E Worker Edition v" & $version, 635, 504)
 	Global $labelList = GUICtrlCreateListView("Labels", 10, 50, 200, 300)
 	_GUICtrlListView_SetColumnWidth($labelList, 0, 175)
 	FileList($labelList, "", $labelsPath, "*.fdf")
@@ -222,7 +232,7 @@ Func MainWindow()
 				GUIDelete($mainWindow)
 				WorkingGUI()
 			Case $supervisionButton
-				ShellExecute($supervisionPath & "\in progress\Supplement Form A.pdf")
+				ShellExecute("\\" & $server & "\hands\employee folders\" & @UserName & "\supervision\in progress\Supplement Form A.pdf")
 			Case $correctionButton
 				GUIDelete($mainWindow)
 				CorrectionGUI()
@@ -277,9 +287,15 @@ Func MainWindow()
 				If $sItem = "" Then
 					MsgBox(0, "Error", "You must select a label")
 				Else
-					FileDelete($labelsPath & "\" & $sItem)
-					_GUICtrlListView_DeleteAllItems($labelList)
-					FileList($labelList, "", $labelsPath, "*.fdf")
+					$confirm = MsgBox(4, "Delete Label", "Are you sure you want to delete the lable " & $sItem & "?")
+					If $confirm = 6 Then
+						FileDelete($labelsPath & "\" & $sItem)
+						_GUICtrlListView_DeleteAllItems($labelList)
+						FileList($labelList, "", $labelsPath, "*.fdf")
+						;Else
+						;	GUIDelete($mainWindow)
+						;	MainWindow()
+					EndIf
 				EndIf
 			Case $import
 				GUIDelete()
@@ -324,3 +340,4 @@ EndFunc   ;==>MainWindow
 #include "chartfilegui.au3"
 #include "opentosupervisor.au3"
 #include "chartspagefind.au3"
+

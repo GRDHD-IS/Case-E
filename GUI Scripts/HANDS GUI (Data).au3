@@ -1,7 +1,7 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Icon=\\grdhd3\hands\HANDS Box\Version 1.1\hands-start-icon.ico
+#AutoIt3Wrapper_Icon=\\grdhd5\hands\HANDS Box\Version 1.1\hands-start-icon.ico
 #AutoIt3Wrapper_Res_Description=GRDHD HANDS GUI for Data Entry
-#AutoIt3Wrapper_Res_Fileversion=2.4.0.0
+#AutoIt3Wrapper_Res_Fileversion=3.5.0.0
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;******************************************************************************
@@ -43,8 +43,11 @@
 #include <IE.au3>
 #include <Timers.au3>
 
+;Versioning variable
+$version = "3.5"
+
 ;Variables that declare paths
-Global $server = "GRDHD3"
+Global $server = "GRDHD5"
 Global $employeefolders = "\\" & $server & "\HANDS\employee folders"
 Global $chartsPath = "\\" & $server & "\HANDS\charts"
 Global $supervisorpath = "\\" & $server & "\hands\supervisor"
@@ -94,12 +97,16 @@ $masterFDFTemplate[4] = _
 		@CRLF & _
 		'%%EOF' & @CRLF
 ;------------------------------------------------------------------------------------------------------------------------------------------
+$processcheck = WinExists("Case-E Data Entry Edition v" & $version)
+If $processcheck = 1 Then
+	WinActivate("Case-E Data Entry Edition v" & $version)
+	Exit
+EndIf
 
-
-$filecheck = FileExists("\\" & $server & "\hands\gui\readme.txt")
+$filecheck = FileExists("\\" & $server & "\hands\gui\readme - data.txt")
 If $filecheck = 1 Then
-	$LocalVersion = FileRead(@UserProfileDir & "\documents\hands\gui\README.txt", 27)
-	$ServerVersion = FileRead("\\grdhd3\hands\gui\README.txt", 27)
+	$LocalVersion = FileRead(@UserProfileDir & "\documents\hands\gui\README - data.txt", 27)
+	$ServerVersion = FileRead("\\" & $server & "\hands\gui\README - data.txt", 27)
 	If $LocalVersion = $ServerVersion Then
 		MainWindow()
 	Else
@@ -112,13 +119,13 @@ Else
 EndIf
 
 Func Update()
-	FileDelete(@UserProfileDir & "\documents\hands\gui\README.txt")
-	FileCopy("\\" & $server & "\hands\gui\README.txt", @UserProfileDir & "\documents\hands\gui\README.txt", $FC_OVERWRITE + $FC_CREATEPATH)
+	FileDelete(@UserProfileDir & "\documents\hands\gui\README - data.txt")
+	FileCopy("\\" & $server & "\hands\gui\README - data.txt", @UserProfileDir & "\documents\hands\gui\README - data.txt", $FC_OVERWRITE + $FC_CREATEPATH)
 	FileDelete(@TempDir & "\GUI UPDATE.cmd")
 	Global $CMD_BATCH = ':loop' & _
 			@CRLF & 'del "' & @ScriptFullPath & '"' & _
 			@CRLF & 'if exist "' & @ScriptFullPath & '" goto loop' & _
-			@CRLF & 'copy "\\grdhd3\hands\gui\' & @OSArch & "\" & @ScriptName & '" "' & @ScriptFullPath & '"' & _
+			@CRLF & 'copy "\\' & $server & '\hands\gui\' & @OSArch & "\" & @ScriptName & '" "' & @ScriptFullPath & '"' & _
 			@CRLF & 'f' & _
 			@CRLF & '"' & @ScriptFullPath & '"'
 	FileWrite(@TempDir & "\GUI UPDATE.cmd", $CMD_BATCH)
@@ -126,7 +133,7 @@ Func Update()
 EndFunc   ;==>Update
 
 Func MainWindow()
-	Global $mainWindow = GUICreate("Case-E Data Entry Edition", 461, 673)
+	Global $mainWindow = GUICreate("Case-E Data Entry Edition v" & $version, 461, 673)
 	Global $workerlist = GUICtrlCreateListView("Workers", 10, 50, 277, 520)
 	_GUICtrlListView_SetColumnWidth($workerlist, 0, 250)
 	FileList($workerlist, "\to data entry", $employeefolders, "*")
