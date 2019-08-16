@@ -1,8 +1,7 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=..\HANDS Box\Version 1.1\hands-start-icon.ico
-#AutoIt3Wrapper_UseX64=y
 #AutoIt3Wrapper_Res_Description=GRDHD HANDS GUI for Workers
-#AutoIt3Wrapper_Res_Fileversion=3.3.0.0
+#AutoIt3Wrapper_Res_Fileversion=3.4.0.0
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;******************************************************************************
@@ -41,7 +40,7 @@
 #include <String.au3>
 
 ;Versioning variable
-$version = "3.3"
+$version = "3.4"
 
 ;Variables that declare paths
 Global $server = "GRDHD5"

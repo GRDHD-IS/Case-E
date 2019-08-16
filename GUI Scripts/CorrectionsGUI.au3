@@ -38,11 +38,11 @@ Func CorrectionGUI()
 							MsgBox(0, "Error", "The date cannot contain any slashes (\ or /)." & @CRLF & "Please try again")
 						Else
 							$filerename = $input & $renameform
-							FileMove($workPath & "\" & $sItem, $workpath & "\" & $filerename)
+							FileMove($correctionPath & "\" & $sItem, $correctionPath & "\" & $filerename)
 							_GUICtrlListView_DeleteAllItems($list)
-							$FileList = _FileListToArray($workPath, "*.pdf", 1)
+							$FileList = _FileListToArray($correctionPath, "*.pdf", 1)
 							If @error = 4 Then
-								MsgBox(0, "Error", "No files found in Work in Progress")
+								MsgBox(0, "Error", "No files found in Corrections")
 								MainWindow()
 							Else
 								For $INDEX = 1 To $FileList[0]
@@ -67,11 +67,11 @@ Func CorrectionGUI()
 							MsgBox(0, "Error", "You must input a name in the format Last, First MI")
 						Else
 							$filerename = $renamedate & $input & $renameform
-							FileMove($workPath & "\" & $sItem, $workpath & "\" & $filerename)
+							FileMove($correctionPath & "\" & $sItem, $correctionPath & "\" & $filerename)
 							_GUICtrlListView_DeleteAllItems($list)
-							$FileList = _FileListToArray($workPath, "*.pdf", 1)
+							$FileList = _FileListToArray($correctionPath, "*.pdf", 1)
 							If @error = 4 Then
-								MsgBox(0, "Error", "No files found in Work in Progress")
+								MsgBox(0, "Error", "No files found in Corrections")
 								MainWindow()
 							Else
 								For $INDEX = 1 To $FileList[0]
