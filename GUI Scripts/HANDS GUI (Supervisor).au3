@@ -1,7 +1,7 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=..\HANDS Box\Version 1.1\hands-start-icon.ico
 #AutoIt3Wrapper_Res_Description=GRDHD HANDS GUI for Supervisors
-#AutoIt3Wrapper_Res_Fileversion=3.3.0.0
+#AutoIt3Wrapper_Res_Fileversion=3.8.0.0
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;******************************************************************************
@@ -43,7 +43,7 @@
 #include <IE.au3>
 
 ;Versioning variable
-$version = "3.3"
+$version = "3.8"
 
 ;Variables that declare paths
 Global $server = "GRDHD5"
@@ -57,7 +57,7 @@ Global $caseloadspath = "\\" & $server & "\hands\gui\caseload.xlsx"
 Global $supervisionFormsPath = "\\" & $server & "\Hands\gui\supervision"
 
 ;Variable for caseload file type
-Global $caseloadFileType = ".xlsx"
+Global $caseloadFileType = ".ods"
 
 ;Variables used as defaults for functions
 Global $formLanguage = "English"
@@ -102,29 +102,30 @@ EndFunc   ;==>Update
 
 
 Func MainWindow()
-	$mainWindow = GUICreate("Case-E Supervisor Edition v" & $version, 877, 753)
-	$workerlist = GUICtrlCreateListView("Workers", 10, 50, 251, 600)
+	$mainWindow = GUICreate("Case-E Supervisor Edition v" & $version, 877, 553)
+	$workerlist = GUICtrlCreateListView("Workers", 10, 50, 251, 400)
 	_GUICtrlListView_SetColumnWidth($workerlist, 0, 247)
 	FileList($workerlist, "to supervisor", $employeefolders, "*")
-	$workerfolders = GUICtrlCreateListView("To Supervisor | Needs Correction | To Data | Work in Progress", 260, 50, 596, 600)
+	$workerfolders = GUICtrlCreateListView("To Supervisor | Needs Correction | To Data | Work in Progress", 260, 50, 596, 400)
 	_GUICtrlListView_SetColumnWidth($workerfolders, 0, 148)
 	_GUICtrlListView_SetColumnWidth($workerfolders, 1, 148)
 	_GUICtrlListView_SetColumnWidth($workerfolders, 2, 148)
 	_GUICtrlListView_SetColumnWidth($workerfolders, 3, 148)
 	FileList2($workerfolders, $employeefolders, "*")
-	$toSupervisor = GUICtrlCreateButton("Open ""To Supervisor""", 10, 651, 140, 25)
-	$needsCorrection = GUICtrlCreateButton("Open ""Needs Correction""", 151, 651, 140, 25)
-	$completedVisits = GUICtrlCreateButton("Open ""Completed Visits""", 151, 676, 140, 25)
-	$completedVisitsArchive = GUICtrlCreateButton("""Completed Visits Archive""", 151, 701, 140, 25)
-	$openCharts = GUICtrlCreateButton("Open Charts", 576, 651, 140, 25)
-	$openArchive = GUICtrlCreateButton("Open Archive", 717, 651, 140, 25)
-	$openCaseload = GUICtrlCreateButton("Caseload", 10, 676, 140, 25)
-	$openSupervision = GUICtrlCreateButton("Supervision", 292, 651, 140, 25)
-	$opendata = GUICtrlCreateButton("Open ""To Data""", 10, 701, 140, 25)
-	$NewUserButton = GUICtrlCreateButton("Create New User", 292, 701, 140, 25)
+	$toSupervisor = GUICtrlCreateButton("Open ""To Supervisor""", 10, 451, 140, 25)
+	$needsCorrection = GUICtrlCreateButton("Open ""Needs Correction""", 151, 451, 140, 25)
+	$completedVisits = GUICtrlCreateButton("Open ""Completed Visits""", 151, 476, 140, 25)
+	$completedVisitsArchive = GUICtrlCreateButton("""Completed Visits Archive""", 151, 501, 140, 25)
+	$openCharts = GUICtrlCreateButton("Open Charts", 576, 451, 140, 25)
+	$fixcharts = GUICtrlCreateButton("Fix Charts", 576, 476, 140, 25)
+	$openArchive = GUICtrlCreateButton("Open Archive", 717, 451, 140, 25)
+	$openCaseload = GUICtrlCreateButton("Caseload", 10, 476, 140, 25)
+	$openSupervision = GUICtrlCreateButton("Supervision", 292, 451, 140, 25)
+	$opendata = GUICtrlCreateButton("Open ""To Data""", 10, 501, 140, 25)
+	$NewUserButton = GUICtrlCreateButton("Create New User", 292, 501, 140, 25)
 	$Refresh = GUICtrlCreateButton("Refresh", 781, 0, 75, 25)
-	$import = GUICtrlCreateButton("Import", 435, 651, 140, 25)
-	$supervisorfolder = GUICtrlCreateButton("Supervisor Folder", 292, 676, 140, 25)
+	$import = GUICtrlCreateButton("Import", 435, 451, 140, 25)
+	$supervisorfolder = GUICtrlCreateButton("Supervisor Folder", 292, 476, 140, 25)
 	GUISetState(@SW_SHOW, $mainWindow)
 
 
@@ -177,6 +178,8 @@ Func MainWindow()
 			Case $openCharts
 				GUIDelete()
 				ChartsGUI("supervisor")
+			Case $fixcharts
+				ShellExecute('\\' & $server & "\hands\handschartpermissions.cmd")
 			Case $openArchive
 				ShellExecute("\\" & $server & "\HANDS\Archive")
 			Case $openCaseload

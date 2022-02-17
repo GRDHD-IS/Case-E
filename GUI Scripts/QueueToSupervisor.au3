@@ -1,8 +1,8 @@
 Func tosupervisorGUI()
-	Global $tosupervisorGUI = GUICreate("Select a File to Queue to Supervisor", 300, 330)
-	$list = GUICtrlCreateListView("File", 10, 10, 280, 280)
-	_GUICtrlListView_SetColumnWidth($list, 0, 279)
-	Global $tosupervisorqueueButton = GUICtrlCreateButton("Queue", 245, 291, 45, 25)
+	Global $tosupervisorGUI = GUICreate("Select a File to Queue to Supervisor", 500, 330)
+	$list = GUICtrlCreateListView("File", 10, 10, 480, 280)
+	_GUICtrlListView_SetColumnWidth($list, 0, 479)
+	Global $tosupervisorqueueButton = GUICtrlCreateButton("Queue", 445, 291, 45, 25)
 	$FileList = _FileListToArray($workPath, "*.pdf", 1)
 	If @error = 4 Then
 		MsgBox(0, "Error", "No files found in Work in Progress Folder")

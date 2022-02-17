@@ -1,7 +1,7 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=..\HANDS Box\Version 1.1\hands-start-icon.ico
 #AutoIt3Wrapper_Res_Description=GRDHD HANDS GUI for Workers
-#AutoIt3Wrapper_Res_Fileversion=3.4.0.0
+#AutoIt3Wrapper_Res_Fileversion=4.0.0.0
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;******************************************************************************
@@ -40,7 +40,7 @@
 #include <String.au3>
 
 ;Versioning variable
-$version = "3.4"
+$version = "4.0"
 
 ;Variables that declare paths
 Global $server = "GRDHD5"
@@ -60,7 +60,7 @@ Global $caseloadsPath = "\\" & $server & "\HANDS\caseloads\" & @UserName
 Global $employeefolders = "\\" & $server & "\HANDS\employee folders\" & @UserName
 
 ;Variable for caseload file type
-Global $caseloadFileType = ".xlsx"
+Global $caseloadFileType = ".ods"
 
 ;Variables used as defaults for functions
 Global $formLanguage = "English"
@@ -143,7 +143,7 @@ If FileExists("c:\program files\freefilesync\freefilesync.exe") Then
 		$ServerVersion = FileRead("\\" & $server & "\hands\gui\README - worker.txt", 27)
 		If $LocalVersion = $ServerVersion Then
 			setup()
-			runsync()
+			;runsync()
 			MainWindow()
 		Else
 			MsgBox(0, "Update Required", "Please Wait while your HANDS GUI is updated", 5)
@@ -151,7 +151,7 @@ If FileExists("c:\program files\freefilesync\freefilesync.exe") Then
 			Exit (1)
 		EndIf
 	Else
-		runsync()
+		;runsync()
 		MainWindow()
 	EndIf
 Else
@@ -221,7 +221,7 @@ Func MainWindow()
 				_GUICtrlListView_DeleteAllItems($labelList)
 				FileList($labelList, "", $labelsPath, "*" & $response & "*.fdf")
 			Case $searchFroms
-				$response = InputBox("Label Search", "Search for:")
+				$response = InputBox("Form Search", "Search for:")
 				_GUICtrlListView_DeleteAllItems($formList)
 				FileList($formList, "", $formsPath & "\" & $formLanguage, "*" & $response & "*.*")
 			Case $chartButton

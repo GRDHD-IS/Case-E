@@ -9,6 +9,7 @@ Func CorrectionGUI()
 	$FileList = _FileListToArray($correctionPath, "*.pdf", 1)
 	If @error = 4 Then
 		MsgBox(0, "Error", "No files found in Needs Correction Folder")
+		GUIDelete($correctionsGUI)
 		MainWindow()
 	Else
 		For $INDEX = 1 To $FileList[0]
@@ -43,6 +44,7 @@ Func CorrectionGUI()
 							$FileList = _FileListToArray($correctionPath, "*.pdf", 1)
 							If @error = 4 Then
 								MsgBox(0, "Error", "No files found in Corrections")
+								GUIDelete($correctionsGUI)
 								MainWindow()
 							Else
 								For $INDEX = 1 To $FileList[0]
@@ -72,6 +74,7 @@ Func CorrectionGUI()
 							$FileList = _FileListToArray($correctionPath, "*.pdf", 1)
 							If @error = 4 Then
 								MsgBox(0, "Error", "No files found in Corrections")
+								GUIDelete($correctionsGUI)
 								MainWindow()
 							Else
 								For $INDEX = 1 To $FileList[0]
@@ -92,6 +95,7 @@ Func CorrectionGUI()
 						$FileList = _FileListToArray($correctionPath, "*.pdf", 1)
 						If @error = 4 Then
 							MsgBox(0, "Error", "No files found in Needs Correction Folder")
+							GUIDelete($correctionsGUI)
 							MainWindow()
 						Else
 							For $INDEX = 1 To $FileList[0]

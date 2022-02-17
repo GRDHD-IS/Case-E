@@ -1,7 +1,7 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=..\HANDS Box\Version 1.1\hands-start-icon.ico
 #AutoIt3Wrapper_Res_Description=GRDHD HANDS GUI for Referrals
-#AutoIt3Wrapper_Res_Fileversion=3.2.0.0
+#AutoIt3Wrapper_Res_Fileversion=3.3.0.0
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;******************************************************************************
@@ -43,7 +43,7 @@
 #include <String.au3>
 #include <IE.au3>
 
-Global $version = "3.2"
+Global $version = "3.3"
 
 Global $server = "grdhd5"
 
@@ -111,10 +111,9 @@ Func MainWindow()
 	$logarchivelabel = GUICtrlCreateLabel("Transfer logs to archive", 201, 201)
 	$openarchive = GUICtrlCreateButton("Log Archive", 200, 225, 100, 25)
 	$openarchivelabel = GUICtrlCreateLabel("Open log archive", 201, 251)
-	$openreferralarchive = GUICtrlCreateButton("Referral Archive", 200, 275, 100, 25)
+	$openpermanentarchive = GUICtrlCreateButton("Referral Archive", 200, 275, 100, 25)
 	$openreferralarchivelabel = GUICtrlCreateLabel("Open referral achive", 201, 301)
-	$openpermanentarchive = GUICtrlCreateButton("Permanent Archive", 200, 325, 100, 25)
-	$openpermanentarchivelabel = GUICtrlCreateLabel("Open permanent achive", 201, 351)
+
 	$button1 = GUICtrlCreateButton("Daviess Pending", 25, 25, 75, 50, $BS_MULTILINE)
 	$button2 = GUICtrlCreateButton("Hancock Pending", 25, 100, 75, 50, $BS_MULTILINE)
 	$button3 = GUICtrlCreateButton("Henderson Pending", 25, 175, 75, 50, $BS_MULTILINE)
@@ -187,9 +186,9 @@ Func MainWindow()
 			Case $openarchive
 				GUIDelete()
 				openlogarchive()
-			Case $openreferralarchive
-				GUIDelete()
-				ReferralArchiveLanding()
+				;Case $openreferralarchive
+				;	GUIDelete()
+				;	ReferralArchiveLanding()
 			Case $openpermanentarchive
 				GUIDelete()
 				PermanentArchiveLanding()
@@ -331,9 +330,11 @@ Func updatedreferrals($county)
 				If $sItem = "" Then
 					MsgBox(0, "Select a referral", "You need to select a referral")
 				Else
-					FileMove($referralspath & "\" & $county & "\updates\" & $sItem, $referralspath & "\" & $county & "\Archive\" & $sItem, $FC_CREATEPATH)
-					_GUICtrlListView_DeleteAllItems($list)
-					FileList($list, $county, $referralspath & "\" & $county & "\updates", "*.pdf")
+					GUIDelete()
+					ArchiveTransmit($sItem, $county)
+					;	FileMove($referralspath & "\" & $county & "\updates\" & $sItem, $referralspath & "\" & $county & "\Archive\" & $sItem, $FC_CREATEPATH)
+					;	_GUICtrlListView_DeleteAllItems($list)
+					;	FileList($list, $county, $referralspath & "\" & $county & "\updates", "*.pdf")
 				EndIf
 		EndSwitch
 	WEnd
@@ -641,13 +642,13 @@ Func ArchiveTransmit($file, $county)
 				GUIDelete()
 				MainWindow()
 			Case $button1
-				FileMove($referralspath & "\" & $county & "\Archive\" & $file, $referralspath & "\" & $county & "\Archive\" & $date[1] - 1 & "\" & $file, $FC_CREATEPATH)
+				FileMove($referralspath & "\" & $county & "\updates\" & $file, $referralspath & "\" & $county & "\Archive\" & $date[1] - 1 & "\" & $file, $FC_CREATEPATH)
 				GUIDelete()
-				ReferralArchive($county)
+				updatedreferrals($county)
 			Case $button2
-				FileMove($referralspath & "\" & $county & "\Archive\" & $file, $referralspath & "\" & $county & "\Archive\" & $date[1] & "\" & $file, $FC_CREATEPATH)
+				FileMove($referralspath & "\" & $county & "\updates\" & $file, $referralspath & "\" & $county & "\Archive\" & $date[1] & "\" & $file, $FC_CREATEPATH)
 				GUIDelete()
-				ReferralArchive($county)
+				updatedreferrals($county)
 		EndSwitch
 	WEnd
 EndFunc   ;==>ArchiveTransmit

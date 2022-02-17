@@ -147,7 +147,12 @@ Func ChartsPageFind($file)
 																														If Not $value = 0 Then
 																															Global $page = "Page 5"
 																														Else
-																															Global $page = "Page 0"
+																															$value = StringInStr($file, "Health Screen")
+																															If Not $value = 0 Then
+																																Global $page = "Page 5"
+																															Else
+																																Global $page = "Page 0"
+																															EndIf
 																														EndIf
 																													EndIf
 																												EndIf

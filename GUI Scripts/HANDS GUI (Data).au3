@@ -1,7 +1,7 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=\\grdhd5\hands\HANDS Box\Version 1.1\hands-start-icon.ico
 #AutoIt3Wrapper_Res_Description=GRDHD HANDS GUI for Data Entry
-#AutoIt3Wrapper_Res_Fileversion=3.5.0.0
+#AutoIt3Wrapper_Res_Fileversion=3.8.0.0
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;******************************************************************************
@@ -44,7 +44,7 @@
 #include <Timers.au3>
 
 ;Versioning variable
-$version = "3.5"
+$version = "3.8"
 
 ;Variables that declare paths
 Global $server = "GRDHD5"
@@ -59,7 +59,7 @@ Global $formspath = "\\" & $server & "\HANDS\Documents\forms"
 Global $caseloadspath = "\\" & $server & "\HANDS\GUI\caseload.xlsx"
 
 ;Variable for caseload file type
-Global $caseloadFileType = ".xlsx"
+Global $caseloadFileType = ".ods"
 
 ;---------------------------------------------------------------------------------------------------------------------------------------------------------
 Global $labelFields[10]
