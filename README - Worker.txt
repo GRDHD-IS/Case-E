@@ -1,4 +1,4 @@
-GRDHD HANDS GUI Version 3.4
+GRDHD HANDS GUI Version 4.0
 
 ******************************************************************************
 
@@ -168,3 +168,22 @@ fixed static reference to old server in caseload code
 
 3.4
 changed workpath reference in corrections name change functions to correctionpath. 
+
+3.5
+fixed corrections window not deleting when no items are left and user is directed back to main window
+Make title of search window for search button display form search (currently says label search)
+
+3.6
+expanded work in progress window and queue to supervisor windows to 500 px
+
+3.7
+removed sync on startup (process check function)
+
+3.8
+Added Health Screen to Page Find script for automatic filing
+
+3.9
+Changed caseload file type to .ods for Libre Office.
+
+4.0
+Fixed error with location from 3.9 change.

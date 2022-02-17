@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FreeFileSync XmlType="BATCH" XmlFormat="14">
+    <Compare>
+        <Variant>TimeAndSize</Variant>
+        <Symlinks>Exclude</Symlinks>
+        <IgnoreTimeShift/>
+    </Compare>
+    <Synchronize>
+        <Variant>Mirror</Variant>
+        <DetectMovedFiles>false</DetectMovedFiles>
+        <DeletionPolicy>RecycleBin</DeletionPolicy>
+        <VersioningFolder Style="Replace"/>
+    </Synchronize>
+    <Filter>
+        <Include>
+            <Item>*</Item>
+        </Include>
+        <Exclude>
+            <Item>\System Volume Information\</Item>
+            <Item>\$Recycle.Bin\</Item>
+            <Item>\RECYCLE?\</Item>
+            <Item>*\desktop.ini</Item>
+            <Item>*\thumbs.db</Item>
+        </Exclude>
+        <TimeSpan Type="None">0</TimeSpan>
+        <SizeMin Unit="None">0</SizeMin>
+        <SizeMax Unit="None">0</SizeMax>
+    </Filter>
+    <FolderPairs>
+        <Pair>
+            <Left>\\grdhd5\hands\documents\forms</Left>
+            <Right>%userprofile%\documents\hands\forms</Right>
+        </Pair>
+        <Pair>
+            <Left>\\grdhd5\hands\hands signatures</Left>
+            <Right>%userprofile%\documents\hands\signatures\</Right>
+        </Pair>
+        <Pair>
+            <Left>\\grdhd5\hands\documents\handouts</Left>
+            <Right>%userprofile%\documents\hands\handouts</Right>
+        </Pair>
+        <Pair>
+            <Left>\\grdhd5\hands\documents\activities</Left>
+            <Right>%userprofile%\documents\hands\activities</Right>
+        </Pair>
+    </FolderPairs>
+    <Errors Ignore="true" Retry="0" Delay="5"/>
+    <LogFolder/>
+    <PostSyncCommand Condition="Completion"/>
+    <Batch>
+        <ProgressDialog Minimized="false" AutoClose="true"/>
+        <ErrorDialog>Show</ErrorDialog>
+        <PostSyncAction>None</PostSyncAction>
+    </Batch>
+</FreeFileSync>

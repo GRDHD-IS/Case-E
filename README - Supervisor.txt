@@ -1,4 +1,4 @@
-GRDHD HANDS GUI Version 3.3
+GRDHD HANDS GUI Version 3.8
 
 ******************************************************************************
 
@@ -165,3 +165,18 @@ server change
 
 3.3
 fixed static reference to old server in caseload code
+
+3.4
+make chart fix button for script
+
+3.5
+Added Health Screen to Page Find script for automatic filing
+
+3.6
+Shrunk main window to make it fit better on the screens of the new tablets.
+
+3.7
+Changed caseload file type to .ods for libre office.
+
+3.8
+Fixed location error with 3.7 change.

@@ -1,4 +1,4 @@
-GRDHD HANDS GUI Version 3.2
+GRDHD HANDS GUI Version 3.3
 ******************************************************************************
 
  ORIGINAL CODE BY KYLE ROSS. Label and form functions developed by Daniel McFeeters.
@@ -39,3 +39,6 @@ added update function
 
 3.2
 server change
+
+3.3
+Remove Referral Archive, rename permenant archive.

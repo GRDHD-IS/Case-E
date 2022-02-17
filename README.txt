@@ -1,5 +1,4 @@
-GRDHD HANdS GUI Version 3.8
-
+GRDHD HANDS GUI Version 3.0
 ******************************************************************************
 
  ORIGINAL CODE BY KYLE ROSS. Label and form functions developed by Daniel McFeeters.
@@ -155,27 +154,3 @@ add a confirmation to deleting labels
 Changed worker supervision to look directly at server instead of syncing copy
 divide sync into two way and one way files
 seperate readme into three versions
-
-3.1
-process check for gui, to make sure only one is open.
-
-3.2
-fixed error on the caseloads gui "data" parent code section where the archive button ended with guidelete and no further commands.
-
-3.3
-server change
-
-3.4
-fixed static reference to old server in caseload code
-
-3.5
-Added edit button to data labels - opens with shell execute to make modification in notepad
-
-3.6
-Added Health Screen to Page Find script for automatic filing
-
-3.7
-Changed caseload file type to .ods for Libre Office
-
-3.8
-Fixed location error related to 3.7 change
